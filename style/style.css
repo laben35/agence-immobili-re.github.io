@@ -1,0 +1,384 @@
+body {
+    font-family: Open sans, Arial, Helvetica, sans-serif;
+    height: 100vh;  /*100 vieWport height, ça prendra 100% de la partie visible de notre écran */
+}
+
+.grille-accueil {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: 70px 500px minmax(300px,1fr) / 600px 1fr 600px;  /*Déclaration de 3 rangés / 3 colonnes. 1fr veut dire une fractional unit cad ça va prendre l'espaca qui reste, qui est disponible mais ça va pouvoir se réduire si on réduit l'écran */ 
+    /* Pour l'espace qui reste en bas de la grille, je rajoute une minmax qui être entre une valeur de 300px et 1fr */
+}
+
+/* --------------- Menu --------------- */
+
+.menu { /* on donne une aire dans la grille que l'on vient de créer*/
+    grid-area: 1 / 1 / 2 / -1; /* 1ère ligne de rangé, 1ère ligne de colonne jusqu'à la 2ième ligne de rangé et jusqu'à la dernière ligne de colonne: -1*/
+    /*background: #000;*/
+    width: 100%;
+    height: 70px; 
+}
+
+.titre-menu {
+    font-family: Playfair Display, 'Times New Roman', Times, serif;
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    height: 70px;
+    position: relative;
+    z-index: 200;
+    border-bottom: 1px solid #000;
+}
+.menu:hover > .titre-menu { /* > c'est tous les éléments qui sont enfants de menu */
+    border-bottom: 0px solid #000; /* quand je survole le menu, j'enlève la ligne */ 
+}
+
+.titre-menu::after { /*ça nous sert à mettre un pseudo élément : ici la petite barre noire */
+    content: '';
+    display: block;
+    position: absolute;
+    width: 35px;
+    height: 1px;
+    background: #000;
+    top: 61px;
+}
+
+.liste-menu {
+    background: #fff;
+    position: relative;
+    z-index: 100;
+    top: -200px;  /*ça disparait en haut */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style-type: none; /*enlève les petits points */
+    border-bottom: 1px solid #000;
+}
+
+.titre-menu:hover + .liste-menu { /* le + c'est l'élément qui vient juste après l'élément titre-menu. Pour que le menu se déroule*/
+    transition: top 0.2s ease-in-out;
+    top: 0px;
+}
+.liste-menu:hover {
+    top: 0px;  /* pour ne pas que ça reparte si on est sur liste-menu */
+}
+.liste-menu li {
+    margin: 10px 0;
+}
+.liste-menu a {
+    text-decoration: none;
+    font-size: 22px;
+    color: #000;
+    position: relative;
+}
+.liste-menu a::after { /*Dès qu'on survole l'élément, on a une petite barre noire qui apparaît */
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: #000;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+.liste-menu a:hover::after {
+    transform: scale(1);
+}
+
+/* --------------- Menu --------------- */
+
+
+.presentation {
+    grid-area: 2 / 1 / 3 / 2;
+    background: #6fb4ec;
+    padding: 40px;
+}
+
+.presentation img {
+    width: 80px;
+}
+.presentation h1 {
+    font-size: 80px;
+    font-family: Playfair Display, 'Times New Roman', Times, serif;
+    font-weight: 700;
+}
+.presentation p {
+    font-size: 20px;
+    margin-top: 20px;
+    line-height: 1.3;
+}
+.presentation a {
+    padding: 15px;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: block;
+    width: 170px;
+    text-align: center;
+}
+
+/* --------------- Slider --------------- */
+
+.slider {
+    grid-area: 2 / 2 / 3 / -1;
+    /* background: chocolate; */
+    position: relative;
+}
+
+.container-slides {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.container-slides img {
+    position: absolute;
+    top: 0px;
+    opacity: 0; /*on fait disparaître toutes les images car on souhaite que celle qui a la classe active */
+    width: 100%;
+    height: 500px;
+    object-fit: cover; /*ça va forcer l'image à couvrir l'espace sans la déformer */
+    display: block;
+    transition: opacity 0.6s ease-in-out;
+}
+
+img.active {
+    opacity: 1;
+}
+
+.cont-btn { /* là on place le container au bouton en bas de l'image, en bas du container */
+    position: absolute;
+    top: 85%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+.btn-nav { /* on met les boutons qui ont des chevron à l'intérieur */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin: 0 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: #333;
+    background: #f1f1f1;
+    border: 1px solid #333;
+}
+.btn-nav img { /*les chevrons à l'intérieur des images */ 
+    width: 20px;
+    height: 20px;
+}
+
+/* --------------- Choix --------------- */
+
+.choix {
+    grid-area: 3 / 1 / 4 / 3;
+    background: #222;
+    color: #f1f1f1;
+    border: 1px solid #000;
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+.titre-choix {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 20px;
+    font-family: Playfair Display, 'Times New Roman', Times, serif;
+}
+.choix p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.go-galerie {
+    font-size: 22px;
+    display: block;
+    margin: 20px auto 0;
+    width: 300px;
+    padding: 20px;
+    text-decoration: none;
+    border: 1px solid #fff;
+    text-align: center;
+    border-radius: 5px;
+    background: #222;
+    color: #f1f1f1;
+}
+.go-galerie:hover {
+    transition: all 0.2s ease-in-out;
+    background: #f1f1f1;
+    color: #222;
+}
+.cont-medias {
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    transform: translateY(-50%);/* ce sera tout le temps vers left: 3% cad tout le temps à gauche et ça ne bougera pas et top: 50%; ça dégale de 50% vers le bas et transform: translateY(-50%); et on fait remonter de 50% sur Y pour que l'élément soit bien centré */
+}
+.media { /* icône des média sociaux */
+    margin: 10px 0;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #f1f1f1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.media img {
+    width: 25px;
+}
+
+/* --------------- Contact --------------- */
+
+
+.contact {
+    grid-area: 3 / 3 / 4 / 4;
+    background: #f6db51;
+    color: #000;
+    position: relative;
+    display: flex;
+    justify-content: space-between; /* mettre de l'espace entre */
+    align-items: center;
+}
+.contact h3 {
+    font-size: 70px;
+    padding-left: 50px;
+    font-family: Playfair Display, 'Times New Roman', Times, serif;
+}
+.go-contact {
+    flex-shrink: 0; /* on empêche le bouton de rétressir */
+    margin-right: 105px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+}
+.go-contact:hover {
+    transform: scale(1.2);
+}
+.go-contact img { /* image qui est à l'intérieur*/
+    width: 50px;
+    height: 50px;
+}
+
+/* --------------- Footer --------------- */
+
+footer {
+    border-top: 1px dashed #000;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+}
+
+/* --------------- RESPONSIVE --------------- */
+
+@media screen and (max-width: 1400px){
+    .cont-medias {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .grille-accueil {
+        grid-template: 70px 500px minmax(300px,1fr) / 400px 1fr 400px;
+    }
+    .contact h3 {
+        font-size: 50px;
+        padding-left: 50px;
+    }
+    .go-contact {
+        width: 70px;
+        height: 70px;
+        margin-right: 55px;
+    }
+    .go-contact img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 950px){
+
+    .titre-choix {
+        font-size: 35px;
+    }
+    .go-galerie {
+        font-size: 18px;
+        width: 250px;
+        padding: 18px;
+    }
+
+}
+
+@media screen and (max-width: 800px){ /* On passe de grille à flex les éléments se placent en dessous les uns des autres*/
+
+    .presentation {
+        padding: 30px;
+    }
+    .presentation h1 {
+        font-size: 60px;
+        margin-top: 5px;
+    }
+
+    .grille-accueil {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .slider {
+        height: 500px;
+    }
+    .titre-choix {
+        font-size: 28px;
+        margin: 50px 10px 20px;
+    }
+    .go-galerie {
+        font-size: 18px;
+        width: 230px;
+        padding: 16px;
+        margin: 20px auto 50px;
+    }
+    .presentation{
+        border-bottom: 1px solid #000;
+    }
+    .contact {
+        display: block;
+    }
+    .contact h3 {
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .go-contact {
+        width: 70px;
+        height: 70px;
+        margin: 30px auto;
+    }
+    .go-contact img {
+        width: 35px;
+        height: 35px;
+    }
+}
